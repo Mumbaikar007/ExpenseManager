@@ -33,8 +33,7 @@ import React, { Component } from 'react';
 import {Card, CardSection, Input, Button} from "./common";
 import { connect } from 'react-redux';
 import { expenseUpdate, expenseCreate } from '../actions';
-import { View, Text} from "react-native";
-import ModalSelector from 'react-native-modal-selector';
+import ExpenseForm from './ExpenseForm';
 
 class NewExpense extends Component {
 
@@ -44,10 +43,22 @@ class NewExpense extends Component {
 
         this.state = {
             textInputValue: ''
-        }
+        };
+
+    }
+
+    onButtonPress(){
+
+        const { expense_name, amount, day, date} = this.props;
+
+        console.log ( expense_name, amount, day, date );
+
+        this.props.expenseCreate( { expense_name, amount, day, date });
     }
 
     render(){
+
+        console.log( this.props.expenses);
 
         let index = 0;
         const data_weekday = [
@@ -74,80 +85,11 @@ class NewExpense extends Component {
 
             <Card>
 
-                <CardSection>
-
-                    <Input
-
-                        label = "Expense"
-                        placeholder = "Grocery store"
-
-                        onChangeText={value => this.props.expenseUpdate({
-                            prop: 'expense_name',
-                            value })}
-                        value = { this.props.expense_name}
-                    />
-
-                </CardSection>
+                <ExpenseForm { ...this.props} />
 
                 <CardSection>
 
-                    <Input
-                        label = "Amount"
-                        placeholder = "Max: 10000"
-                        onChangeText={value => this.props.expenseUpdate({
-                            prop: 'amount',
-                            value })}
-                        value={this.props.amount}
-                    />
-
-                </CardSection>
-
-                <CardSection>
-
-                    <View style = { styles.viewStyle }>
-
-                        <Text style = {styles.labelStyle}  >
-                            When
-                        </Text>
-
-                        <View style = { styles.viewStyle }>
-
-                            <ModalSelector
-
-                                style={ { marginLeft: -55}}
-
-                                data={data_day}
-                                initValue="Date"
-
-                                onChange={value => this.props.expenseUpdate({
-                                    prop: 'date',
-                                    value
-                                })}
-                            />
-
-                            <ModalSelector
-
-                                style={ {marginLeft: 15} }
-
-                                data={data_weekday}
-                                initValue="Weekday"
-
-                                onChange={value => this.props.expenseUpdate({
-                                    prop: 'day',
-                                    value
-                                })}
-                            />
-
-                        </View>
-
-                    </View>
-
-                </CardSection>
-
-
-                <CardSection>
-
-                    <Button>
+                    <Button onPress = { this.onButtonPress.bind(this) }>
                         Save
                     </Button>
 
@@ -169,21 +111,7 @@ const mapStateToProps = ( { expense } ) => {
 
 };
 
-const styles = {
 
-    viewStyle: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-
-    labelStyle: {
-        fontSize: 18,
-        paddingLeft: 20,
-        flex: 1,
-        marginTop: 7
-    },
-
-};
 
 export default connect ( mapStateToProps, { expenseUpdate, expenseCreate } ) (NewExpense );
 
