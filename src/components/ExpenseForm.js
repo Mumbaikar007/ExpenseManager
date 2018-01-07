@@ -14,6 +14,29 @@ class ExpenseForm extends Component {
 
     render() {
 
+        let index = 0;
+        const data_weekday = [
+            { key: index++, section: true, label: 'Weekday' },
+            { key: index++, label: 'Monday' },
+            { key: index++, label: 'Tuesday' },
+            { key: index++, label: 'Wednesday' },
+            { key: index++, label: 'Thursday' },
+            { key: index++, label: 'Friday' },
+            { key: index++, label: 'Saturday' },
+            { key: index++, label: 'Sunday' },
+
+        ];
+
+
+        const data_day = [ { key: 0, section: true, label: 'Select Day'}];
+        for ( var i = 1; i < 32; i ++){
+            data_day.push({
+                key: i,
+                label: `${i}`
+            });
+        }
+
+
         return (
             <View>
 

@@ -11,8 +11,8 @@ const RouterComponent = () => {
 
     return (
         <Router>
-            <Stack key = "root">
 
+            <Stack key = "root">
 
                 <Scene
                     key="login"
@@ -36,6 +36,7 @@ const RouterComponent = () => {
                 />
 
             </Stack>
+
         </Router>
     );
 };
