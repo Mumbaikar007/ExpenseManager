@@ -34,7 +34,7 @@ export const expenseFetch = () => {
 
     const { currentUser } =  firebase.auth();
 
-    return ( dispatch) =>{
+    return ( dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/expense`)
             .on('value', snapshot => {
                 dispatch ( { type: EXPENSE_FETCH_SUCCESS, payload: snapshot.val()});

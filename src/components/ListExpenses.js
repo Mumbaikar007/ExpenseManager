@@ -11,18 +11,51 @@ class ListExpenses extends Component {
     }
 
     render() {
-        const { expense_name } = this.props.expenses;
+        const { expense_name, amount } = this.props.expenses;
 
         return (
-            <TouchableWithoutFeedback onPress = { this.onRowPress.bind(this)}>
-                <View>
-                    <CardSection>
-                        <Text style={styles.titleStyle}>
-                            {expense_name}
-                        </Text>
-                    </CardSection>
+
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}>
+
+                <View style={{flex: 1 }}>
+
+                    <TouchableWithoutFeedback onPress = { this.onRowPress.bind(this)}>
+
+                            <View>
+                                <CardSection>
+                                    <View style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                    }}>
+
+                                        <Text style={styles.titleStyle}>
+                                            {expense_name}
+                                        </Text>
+
+                                        <Text style={styles.amountStyle}>
+                                            {amount}
+                                        </Text>
+
+                                    </View>
+                                </CardSection>
+                            </View>
+
+                    </TouchableWithoutFeedback>
+
                 </View>
-            </TouchableWithoutFeedback>
+
+                <View >
+                    <Text>
+                    Amount : totalAmount
+                    </Text>
+                </View>
+
+            </View>
         );
     }
 }
@@ -31,7 +64,10 @@ const styles = {
     titleStyle: {
         fontSize: 18,
         paddingLeft: 15
-    }
+    },
+    amountStyle: {
+        fontSize: 18,
+    },
 };
 
 export default ListExpenses;
