@@ -49,12 +49,6 @@ class ListExpenses extends Component {
 
                 </View>
 
-                <View >
-                    <Text>
-                    Amount : totalAmount
-                    </Text>
-                </View>
-
             </View>
         );
     }

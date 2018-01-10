@@ -1,12 +1,15 @@
 
 import React, { Component } from 'react';
-import { ListView } from 'react-native';
+import { ListView, View, Text} from 'react-native';
 import { expenseFetch} from "../actions";
 import { connect } from 'react-redux';
 import _ from  'lodash';
 import ListExpenses from './ListExpenses';
+import { CardSection } from './common';
+
 
 class UserExpenses extends Component {
+
 
     componentWillMount() {
 
@@ -31,7 +34,8 @@ class UserExpenses extends Component {
     }
 
     constructor(props) {
-        super(props)
+        super(props);
+        this.state ={ f1: '',f2: '',result: '' };
     }
 
     static navigationOptions = {
@@ -42,14 +46,48 @@ class UserExpenses extends Component {
         return <ListExpenses expenses={expense_fetch} />;
     }
 
+    renderTotalAmount ( expense_fetch ){
+        var totalAmount = 0;
+
+        if (typeof something === "undefined") {
+            return null;
+        }
+        expense_fetch.forEach(
+            function (object) {
+                totalAmount += parseInt(object.amount);
+            }
+        );
+
+        return totalAmount;
+    }
+
     render() {
 
+
+        const result = this.renderTotalAmount();
+
+
         return (
-            <ListView
-                enableEmptySections
-                dataSource={this.dataSource}
-                renderRow={this.renderRow}
-            />
+
+            <View style = {{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+            }}>
+
+                <ListView
+                    enableEmptySections
+                    dataSource={this.dataSource}
+                    renderRow={this.renderRow}
+                />
+
+                <CardSection>
+                    <View>
+                        { result ? <Text style={styles.titleStyle}>{ result }</Text> : null }
+                    </View>
+                </CardSection>
+
+            </View>
         );
 
     }
@@ -62,8 +100,20 @@ const mapStateToProps = state => {
         return { ...val, uid};
     });
 
+    console.log("*********************************************");
+    console.log(expense_fetch);
+    console.log("*********************************************");
+
     return { expense_fetch };
 
 };
+
+const styles = {
+    titleStyle: {
+        fontSize: 18,
+        paddingLeft: 15
+    }
+};
+
 
 export default connect ( mapStateToProps, { expenseFetch }) (UserExpenses);
